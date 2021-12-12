@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +19,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('posts', PostController::class)->only([
-    'destroy', 'show', 'store', 'update'
-]);
+Route::group(['middleware' =>  ['api']], function () {
+    Route::post('signup', [AuthController::class, 'signup']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('forgot', [AuthController::class, 'forgot']);
+    Route::post('reset-psw', [AuthController::class, 'resetPsw'])->name('password.reset');
+    Route::post('activation', [AuthController::class, 'activation'])->name('api.activation');
+    Route::get('activate/{user}/{code}', [AuthController::class, 'activate'])->name('api.activate');
+    Route::group(['middleware' =>  ['jwt.auth:api']], function () {
+        Route::post('logout', [AuthController::class, 'logout']);
+    });
+});

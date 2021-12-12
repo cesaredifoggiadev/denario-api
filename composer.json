@@ -12,7 +12,9 @@
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "mongodb/mongodb": "^1.10"
+        "mongodb/mongodb": "^1.10",
+        "tymon/jwt-auth": "^1.0",
+        "cartalyst/sentinel": "^5.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
